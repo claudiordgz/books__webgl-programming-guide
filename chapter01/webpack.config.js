@@ -16,26 +16,29 @@ if(isProduction) {
 }
 
 let config = {
-  entry: './src/index.js',
+  devtool: 'inline-source-map', // Comment this out when done
+  entry: './src/app/main.ts',
   output: {
     libraryTarget: "var",
     library: '[name]',
     path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   },
+  resolve: {
+    // Add `.ts` and `.tsx` as a resolvable extension.
+    extensions: ['.ts', '.tsx', '.js'] // note if using webpack 1 you'd also need a '' in the array as well
+  },
   module: {
     rules: [{
+      test: /\.tsx?$/,
+      exclude: /node_modules/,
+      loaders: [ 'babel-loader', 'ts-loader' ]
+    }, {
       test: /\.js$/,
       exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['env', { "modules": false }]
-          ]
-        }
-      }
-    }, {
+      loaders: [ 'babel-loader' ]
+    }
+    , {
       test: /\.css$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',

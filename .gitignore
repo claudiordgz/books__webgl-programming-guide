@@ -71,5 +71,6 @@ typings/
 .history
 
 dist/
+examples/
 
 # End of https://www.gitignore.io/api/node,visualstudiocode
