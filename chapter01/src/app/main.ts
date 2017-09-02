@@ -14,8 +14,8 @@ const FSHADER : string  =
 `
 
 function loadSh(gl: WebGLRenderingContext, 
-                    shType: number, 
-                    shStr: string): WebGLShader 
+                shType: number, 
+                shStr: string): WebGLShader 
 {
     const sh = <WebGLShader> gl.createShader(shType)
     if (sh == null) {
@@ -59,7 +59,7 @@ function createProgram( gl: WebGLRenderingContext,
 
 function init( gl: WebGLRenderingContext,
                 vertexSh: string, 
-                fragmentSh: string) : any 
+                fragmentSh: string) : WebGLProgram 
 {
     const prg = createProgram(gl, vertexSh, fragmentSh)
     if (!prg) {
@@ -77,7 +77,8 @@ function init( gl: WebGLRenderingContext,
         console.error('NOWEBGL')
         return
     }
-    if (!init(gl, VSHADER, FSHADER)) {
+    const prg = <WebGLProgram> init(gl, VSHADER, FSHADER)
+    if (!prg) {
         console.error('INITFAIL')
         return
     }
